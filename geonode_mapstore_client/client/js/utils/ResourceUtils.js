@@ -307,7 +307,7 @@ export const isDocumentExternalSource = (resource) => {
     return resource && resource.resource_type === ResourceTypes.DOCUMENT && resource.sourcetype === SOURCE_TYPES.REMOTE;
 };
 
-export const getResourceTypesInfo = () => ({
+export const ResourceTypesInfos = {
     [ResourceTypes.DATASET]: {
         icon: 'database',
         canPreviewed: (resource) => resourceHasPermission(resource, 'view_resourcebase'),
@@ -364,7 +364,9 @@ export const getResourceTypesInfo = () => ({
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => (`/apps/${resource.pk}/metadata`)
     }
-});
+}
+
+export const getResourceTypesInfo = () => ResourceTypesInfos;
 
 export const getMetadataUrl = (resource) => {
     if (resource) {
