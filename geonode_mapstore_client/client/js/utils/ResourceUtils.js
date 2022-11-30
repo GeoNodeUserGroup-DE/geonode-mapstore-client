@@ -363,6 +363,12 @@ export const ResourceTypesInfos = {
         formatEmbedUrl: () => false,
         formatDetailUrl: (resource) => resource?.detail_url && parseDevHostname(resource.detail_url),
         formatMetadataUrl: (resource) => (`/apps/${resource.pk}/metadata`)
+    },
+    ["externalapplication"]: {
+        icon: 'browser',
+        name: 'ExternalApplication',
+        canPreviewed: (resource) => resourceHasPermission(resource, 'view_resourcebase'),
+        formatMetadataUrl: (resource) => resource.absolute_url
     }
 }
 
