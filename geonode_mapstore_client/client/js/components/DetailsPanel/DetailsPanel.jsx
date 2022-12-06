@@ -154,8 +154,9 @@ const DetailsPanelTools = ({
                 </Button>
             </CopyToClipboard>}
             {detailUrl && !editThumbnail && <Button
+                target={(resource?.resource_type === "externalapplication") ? "_blank" : ""}
                 variant="primary"
-                href={(resourceCanPreviewed || canView) ? detailUrl : metadataDetailUrl}
+                href={(resourceCanPreviewed) ? detailUrl : metadataDetailUrl}
                 rel="noopener noreferrer">
                 <Message msgId={`gnhome.view${((resourceCanPreviewed) ? name : 'Metadata')}`} />
             </Button>}
