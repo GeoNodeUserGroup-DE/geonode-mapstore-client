@@ -71,7 +71,7 @@ jobs:
         run: git add --all
         
       - name: "Create Pull Request"
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           title: "[${{ github.event.base_ref }}] new JS dist build"
           body: "CI build on branch ${{ github.event.base_ref }}"
