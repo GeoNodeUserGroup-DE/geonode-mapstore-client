@@ -73,6 +73,7 @@ jobs:
       - name: "Create Pull Request"
         uses: peter-evans/create-pull-request@v4
         with:
-          title: "[${{ github.event.base_ref }}] new JS dist build"
+          title: "[datapackage_tabular-data] new JS dist build"
           body: "CI build on branch ${{ github.event.base_ref }}"
+          base: "datapackage_tabular-data"
           delete-branch: true
