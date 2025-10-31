@@ -7,10 +7,6 @@ concurrency:
   cancel-in-progress: true
 # Controls when the workflow will run
 on:
-  workflow_run:
-    workflows: [datapackage_tabular-data (tests)]
-    types:
-      - completed
   # Triggers the workflow on push events but only for the datapackage_tabular branch
   push:
     branches: [ datapackage_tabular-data ]
@@ -25,7 +21,6 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_and_commit:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     env:
       working-directory: ./geonode_mapstore_client/client
     runs-on: ubuntu-latest
