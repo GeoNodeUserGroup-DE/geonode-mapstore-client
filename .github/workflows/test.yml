@@ -4,7 +4,8 @@ name: "datapackage_tabular-data (tests)"
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow pull request events but only for the 4.4.x branch
+  push:
+  # Triggers the workflow pull request events but only for the datapackage_tabular-data branch
   pull_request:
     branches: [ datapackage_tabular-data ]
     paths: 
