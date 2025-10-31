@@ -153,41 +153,6 @@ export const resourceToLayerConfig = (resource) => {
         const { url: wmsUrl } = links.find(({ link_type: linkType }) => linkType === 'OGC:WMS') || {};
         const { url: wmtsUrl } = links.find(({ link_type: linkType }) => linkType === 'OGC:WMTS') || {};
 
-        if (resource.subtype === "tabular") {
-            return {
-                perms,
-                id: uuid(),
-                pk,
-                type: 'wfs',
-                name: alternate,
-                url: wfsUrl || '',
-                format: defaultLayerFormat,
-                ...(wfsUrl && {
-                    search: {
-                        type: 'wfs',
-                        url: wfsUrl
-                    }
-                }),
-                ...(bbox ? { bbox } : { bboxError: true }),
-                ...(template && {
-                    featureInfo: {
-                        format: FEATURE_INFO_FORMAT,
-                        template
-                    }
-                }),
-                style: defaultStyleParams?.defaultStyle?.name || '',
-                title,
-                tileSize: defaultTileSize,
-                visibility: true,
-                ...(params && { params }),
-                extendedParams,
-                ...(fields && { fields }),
-                ...(sourcetype === SOURCE_TYPES.REMOTE && !wmsUrl.includes('/geoserver/') && {
-                    serverType: ServerTypes.NO_VENDOR
-                })
-            };
-        }
-    
         const dimensions = [
             ...(hasTime ? [{
                 name: 'time',
@@ -204,7 +169,7 @@ export const resourceToLayerConfig = (resource) => {
             defaultTileSize = 512
         } = getConfigProp('geoNodeSettings') || {};
         const fields = datasetAttributeSetToFields(resource);
-        return {
+        const payload = {
             perms,
             id: uuid(),
             pk,
@@ -237,6 +202,24 @@ export const resourceToLayerConfig = (resource) => {
                 serverType: ServerTypes.NO_VENDOR
             })
         };
+
+        if (resource.subtype !== "tabular") {
+            return payload;
+        } else {
+            return Object.assign(payload, {
+                type: 'wfs',
+                url: wfsUrl || '',
+                ...(wfsUrl && {
+                    search: {
+                        type: 'wfs',
+                        url: wfsUrl
+                    }
+                }),
+                ...(sourcetype === SOURCE_TYPES.REMOTE && !wfsUrl.includes('/geoserver/') && {
+                    serverType: ServerTypes.NO_VENDOR
+                })
+            });
+        }
     }
 };
 
